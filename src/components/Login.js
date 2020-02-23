@@ -3,20 +3,21 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 //  Production link -> `https://www.mountainproject.com/data/get-user?email=${email}&key=200690742-42241ba1e91a3117df55a44758abbb73`
+// Dev link -> `https://www.mountainproject.com/data/get-user?userId=109791883&key=200690742-42241ba1e91a3117df55a44758abbb73`
 
 function Login({ setUserData }) {
-    const [ email, setEmail ] = useState()
-    const [ error, setError ] = useState(undefined)
+    const [ email, setEmail ] = useState("")
+    const [ error, setError ] = useState()
     const history = useHistory();
     const handleSubmit = (e) => {
         e.preventDefault()
        
         axios
-            .get(`https://www.mountainproject.com/data/get-user?userId=109791883&key=200690742-42241ba1e91a3117df55a44758abbb73`)
+            .get(`https://www.mountainproject.com/data/get-user?email=${email}&key=200690742-42241ba1e91a3117df55a44758abbb73`)
             .then((res) => {
                 setUserData(res.data)
                 setError(undefined)
-                history.push(`/users/${res.data.id}`)
+                history.push(`/user/${res.data.id}`)
             })
             .catch((err) => setError("Please enter a valid email"))
     }
